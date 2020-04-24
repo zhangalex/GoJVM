@@ -7,7 +7,7 @@ pipeline {
           steps {
             echo 'a1'
             script {
-              pomFiles = findFiles(glob: '**/*/pom.xml')
+              pomFiles = findFiles(glob: '**/pom.xml')
 
 
               for (i = 0; i < pomFiles.length; i++) {
