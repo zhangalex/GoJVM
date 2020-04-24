@@ -12,7 +12,7 @@ pipeline {
 
               for (i = 0; i < pomFiles.length; i++) {
                 pomFile = pomFiles[i].path;
-                echo pomFile.path
+                echo pomFile
               }
             }
 
