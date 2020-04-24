@@ -6,6 +6,16 @@ pipeline {
         stage('a1') {
           steps {
             echo 'a1'
+            script {
+              pomFiles = findFiles(glob: '**/pom.xml')
+
+
+              for (i = 0; i < pomFiles.length; i++) {
+                pomFile = pomFiles[i].path;
+                echo pomFile.path
+              }
+            }
+
           }
         }
 
