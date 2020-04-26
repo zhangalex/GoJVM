@@ -35,8 +35,17 @@ pipeline {
     }
 
     stage('d1') {
+      when {
+        beforeAgent true
+        expression {
+          input 'Deploy to PROD? (Click "Proceed" to continue)'
+          // if input is Aborted, the whole build will fail, otherwise
+          // we must return true to continue
+          return true
+        }
+
+      }
       steps {
-        input 'Deploy to PROD? (Click "Proceed" to continue)'
         echo 'd1'
       }
     }
