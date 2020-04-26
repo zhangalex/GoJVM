@@ -43,6 +43,6 @@ pipeline {
 
   }
   triggers {
-    pollSCM('')
+    githubPush()
   }
 }
