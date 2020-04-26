@@ -36,6 +36,7 @@ pipeline {
 
     stage('d1') {
       steps {
+        input 'Deploy to PROD? (Click "Proceed" to continue)'
         echo 'd1'
       }
     }
