@@ -25,8 +25,13 @@ pipeline {
               configFileProvider([configFile(fileId: 'td-nparks-poi-service', variable: 'TD_FILE_PATH')]) {
                 def tdJson = readFile(TD_FILE_PATH)
                 def json = new groovy.json.JsonSlurper().parseText(tdJson)
+                def keys = ['family', 'taskRoleArn', 'executionRoleArn', 'networkMode', 'containerDefinitions', 'volumes', 'placementConstraints', 'requiresCompatibilities', 'cpu', 'memory', 'tags', 'pidMode', 'ipcMode', 'proxyConfiguration']
 
-                json.keySet().each {echo it}
+                json.keySet().each {
+                  if (keys.indexOf(it) == -1) {
+                    json.remove(it)
+                  }
+                }
 
                 println groovy.json.JsonOutput.toJson(json)
               }
