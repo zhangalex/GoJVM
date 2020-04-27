@@ -5,6 +5,7 @@ pipeline {
       steps {
         script {
           def imgUrl = ECR_URL + "/nparks-poi-service"
+          def imgVer = '1'
           def ecsCluster = "${ECS_CLUSTER}-lab"
           withAWS(credentials: AWS_CREDENTIAL_ID, region: AWS_REGION) {
             docker.image("releaseworks/awscli:latest").inside("--entrypoint \"\" -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY -e AWS_DEFAULT_REGION") {
@@ -14,6 +15,7 @@ pipeline {
               def json = readJSON text: tdJson
               json = json.get('taskDefinition')
               json.containerDefinitions.each {
+                echo it
                 if (it.image ==~ /^${imgUrl}/) {
                   it.image = imgUrl + ":" + imgVer
                 }
