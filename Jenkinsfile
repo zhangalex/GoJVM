@@ -21,7 +21,10 @@ pipeline {
 
         stage('b1') {
           steps {
-            echo 'b1'
+            configFileProvider([configFile(fileId: 'td-nparks-poi-service', variable: 'TD_FILE_PATH')]) {
+              sh 'cat $TD_FILE_PATH'
+            }
+
           }
         }
 
