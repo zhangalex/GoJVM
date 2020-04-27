@@ -13,12 +13,10 @@ pipeline {
 
               def keys = ['family', 'taskRoleArn', 'executionRoleArn', 'networkMode', 'containerDefinitions', 'volumes', 'placementConstraints', 'requiresCompatibilities', 'cpu', 'memory', 'tags', 'pidMode', 'ipcMode', 'proxyConfiguration']
               def json = readJSON text: tdJson
-              json = json.get('taskDefinition')
+              json = json.taskDefinition
               json.containerDefinitions.each {
                 echo it
-                if (it.image ==~ /^${imgUrl}/) {
-                  it.image = imgUrl + ":" + imgVer
-                }
+
               }
 
               echo json
