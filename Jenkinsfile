@@ -20,7 +20,7 @@ pipeline {
                 }
 
               }
-              // echo json.containerDefinitions[0]
+              echo json.containerDefinitions[0]
 
             }
           }
