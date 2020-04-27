@@ -1,9 +1,10 @@
 pipeline {
   agent any
   stages {
-stage('Version') {
+    stage('Version') {
       when {
         expression {
+          echo BRANCH_NAME
           BRANCH_NAME ==~ /tags\/.+/
         }
 
@@ -16,6 +17,7 @@ stage('Version') {
 
       }
     }
+
     stage('Build') {
       steps {
         script {
