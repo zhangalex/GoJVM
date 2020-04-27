@@ -4,6 +4,7 @@ pipeline {
     stage('Build') {
       steps {
         script {
+          def imgUrl = ECR_URL + "/nparks-poi-service"
           def ecsCluster = "${ECS_CLUSTER}-lab"
           withAWS(credentials: AWS_CREDENTIAL_ID, region: AWS_REGION) {
             docker.image("releaseworks/awscli:latest").inside("--entrypoint \"\" -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY -e AWS_DEFAULT_REGION") {
