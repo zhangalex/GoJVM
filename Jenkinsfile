@@ -15,7 +15,7 @@ pipeline {
               def json = readJSON text: tdJson, returnPojo: true
               json = json.taskDefinition
               json.containerDefinitions.each {obj ->
-              if (obj.image ==~ /^${imgUrl}/) {
+              if (obj.image.startsWith(imgUrl)) {
                 //obj.image = imgUrl + ":" + imgVer
               }
 
