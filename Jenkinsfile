@@ -1,6 +1,21 @@
 pipeline {
   agent any
   stages {
+stage('Version') {
+      when {
+        expression {
+          BRANCH_NAME ==~ /release\/.+/
+        }
+
+      }
+      steps {
+        script {
+          imgVer = TAG_NAME
+          echo 'version $imgVer'
+        }
+
+      }
+    }
     stage('Build') {
       steps {
         script {
