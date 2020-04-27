@@ -35,7 +35,11 @@ pipeline {
                   }
                 }
 
-                println groovy.json.JsonOutput.toJson(json)
+                writeJSON file: 'output.json', json: json
+
+                sh 'cat output.json'
+
+                //                println groovy.json.JsonOutput.toJson(json)
               }
             }
 
