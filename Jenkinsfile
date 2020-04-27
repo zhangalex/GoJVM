@@ -26,7 +26,7 @@ pipeline {
                 def tdJson = readFile(TD_FILE_PATH)
                 def json = new groovy.json.JsonSlurper().parseText(tdJson)
 
-                json.keySet.each {echo it}
+                json.keySet().each {echo it}
 
                 println groovy.json.JsonOutput.toJson(json)
               }
