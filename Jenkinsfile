@@ -1,21 +1,18 @@
 pipeline {
   agent any
   stages {
-stage('Version') {
-      when {
-        expression {
-          BRANCH_NAME ==~ /tags\/.+/
-        }
-
-      }
+    stage('Version') {
       steps {
         script {
+          echo BRANCH_NAME
+          echo TAG_NAME
           imgVer = TAG_NAME
           echo 'version $imgVer'
         }
 
       }
     }
+
     stage('Build') {
       steps {
         script {
