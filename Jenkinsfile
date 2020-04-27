@@ -25,6 +25,7 @@ pipeline {
               sh 'cat $TD_FILE_PATH'
             }
 
+            sh 'curl -s \'https://api.github.com/users/lambda\' | jq -r \'.name\''
           }
         }
 
