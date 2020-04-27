@@ -7,6 +7,14 @@ pipeline {
           steps {
             echo 'a1'
             script {
+              def jsonStr = '{"a": 1, "b": [{"c": 3, "d": 4}]}}'
+              def json = new JsonSlurper().parseText(jsonStr)
+              // XXX: first "de-array" `b`
+              json.b = json.b.first()
+              // next remove `c` from it
+              json.b.remove('c')
+              println JsonOutput.toJson(json)
+
               pomFiles = findFiles(glob: '**/pom.xml')
 
 
@@ -25,7 +33,6 @@ pipeline {
               sh 'cat $TD_FILE_PATH'
             }
 
-            sh 'curl -s \'https://api.github.com/users/lambda\' | jq -r \'.name\''
           }
         }
 
