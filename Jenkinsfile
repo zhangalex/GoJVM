@@ -14,8 +14,8 @@ pipeline {
               def keys = ['family', 'taskRoleArn', 'executionRoleArn', 'networkMode', 'containerDefinitions', 'volumes', 'placementConstraints', 'requiresCompatibilities', 'cpu', 'memory', 'tags', 'pidMode', 'ipcMode', 'proxyConfiguration']
               def json = readJSON text: tdJson, returnPojo: true
               json = json.taskDefinition
-              json.containerDefinitions.each {key, value ->
-              echo "Walked through key $key and value $value"
+              json.containerDefinitions.each {obj ->
+              echo obj.image
 
             }
 
