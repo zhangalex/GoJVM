@@ -12,29 +12,13 @@ pipeline {
               def keys = ['family', 'taskRoleArn', 'executionRoleArn', 'networkMode', 'containerDefinitions', 'volumes', 'placementConstraints', 'requiresCompatibilities', 'cpu', 'memory', 'tags', 'pidMode', 'ipcMode', 'proxyConfiguration']
               def json = readJSON text: tdJson
               json = json.get('taskDefinition')
-              json.keySet().each {
-                def target = it
-                def i = keys.findIndexOf { it == target }
-                if (i == -1) {
-                  json.remove(it)
+              json.containerDefinitions.each {
+                if (it.image ==~ /^${imgUrl}/) {
+                  it.image = imgUrl + ":" + imgVer
                 }
               }
-              writeJSON file: 'new_td.json', json: json
 
-              sh "aws ecs register-task-definition --cli-input-json file://new_td.json"
-
-              def newTdJsonStr = sh(returnStdout:true, script: "aws ecs describe-task-definition --task-definition ${TASK_DEF}").trim()
-              def newTdJson = readJSON text: newTdJsonStr
-              def taskRevision = newTdJson.taskDefinition.revision
-
-              def svcJsonStr = sh(returnStdout:true, script: "aws ecs describe-services --cluster ${ecsCluster} --services ${ECS_SERVICE_NAME}").trim()
-              def svcJson = readJSON text: svcJsonStr
-              def desiredCount = svcJson.desiredCount
-              if (desiredCount == null){
-                desiredCount=1
-              }
-
-              sh "aws ecs update-service --cluster ${ecsCluster} --service ${ECS_SERVICE_NAME} --task-definition ${TASK_DEF}:${taskRevision} --desired-count ${desiredCount}  --force-new-deployment"
+              echo json
             }
           }
         }
