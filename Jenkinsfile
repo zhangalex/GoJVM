@@ -34,7 +34,7 @@ pipeline {
                 desiredCount=1
               }
 
-              sh "aws ecs update-service --cluster ${ecsCluster} --service ${ECS_SERVICE_NAME} --task-definition ${TASK_DEF}:${taskRevision} --desired-count ${desiredCount}"
+              sh "aws ecs update-service --cluster ${ecsCluster} --service ${ECS_SERVICE_NAME} --task-definition ${TASK_DEF}:${taskRevision} --desired-count ${desiredCount}  --force-new-deployment"
             }
           }
         }
