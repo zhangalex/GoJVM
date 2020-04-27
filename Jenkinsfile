@@ -1,13 +1,14 @@
 pipeline {
   agent any
   stages {
+when {
+buildingTag()
+}
     stage('Version') {
       steps {
         script {
-          echo BRANCH_NAME
-          echo TAG_NAME
           imgVer = TAG_NAME
-          echo 'version $imgVer'
+          echo "version ${imgVer}"
         }
 
       }
