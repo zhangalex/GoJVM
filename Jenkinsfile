@@ -14,30 +14,30 @@ pipeline {
               def keys = ['family', 'taskRoleArn', 'executionRoleArn', 'networkMode', 'containerDefinitions', 'volumes', 'placementConstraints', 'requiresCompatibilities', 'cpu', 'memory', 'tags', 'pidMode', 'ipcMode', 'proxyConfiguration']
               def json = readJSON text: tdJson
               json = json.taskDefinition
-              json.containerDefinitions.each {
-                echo it
+              json.containerDefinitions.each {key, value ->
+              echo "Walked through key $key and value $value"
 
-              }
-
-              echo json
             }
+
+
           }
         }
-
       }
-    }
 
+    }
   }
-  environment {
-    EMAIL_TO = 'alex.zhang@yumong.com'
-    AWS_CREDENTIAL_ID = 'aws-credentials-username-password'
-    ECR_URL = '853923275848.dkr.ecr.ap-southeast-1.amazonaws.com'
-    AWS_REGION = 'ap-southeast-1'
-    ECS_CLUSTER = 'cluster-nparks'
-    ECS_SERVICE_NAME = 'svc-nparks-poi'
-    TASK_DEF = 'td-nparks-poi'
-  }
-  triggers {
-    githubPush()
-  }
+
+}
+environment {
+  EMAIL_TO = 'alex.zhang@yumong.com'
+  AWS_CREDENTIAL_ID = 'aws-credentials-username-password'
+  ECR_URL = '853923275848.dkr.ecr.ap-southeast-1.amazonaws.com'
+  AWS_REGION = 'ap-southeast-1'
+  ECS_CLUSTER = 'cluster-nparks'
+  ECS_SERVICE_NAME = 'svc-nparks-poi'
+  TASK_DEF = 'td-nparks-poi'
+}
+triggers {
+  githubPush()
+}
 }
