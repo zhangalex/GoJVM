@@ -4,7 +4,7 @@ pipeline {
     stage('Build') {
       steps {
         script {
-          def ecsCluster = ${ECS_CLUSTER}-lab
+          def ecsCluster = "${ECS_CLUSTER}-lab"
           withAWS(credentials: AWS_CREDENTIAL_ID, region: AWS_REGION) {
             docker.image("releaseworks/awscli:latest").inside("--entrypoint \"\" -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY -e AWS_DEFAULT_REGION") {
               def tdJson = sh(returnStdout:true, script: "aws ecs describe-task-definition --task-definition ${TASK_DEF}").trim()
