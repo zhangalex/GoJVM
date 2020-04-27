@@ -1,7 +1,7 @@
 pipeline {
   agent any
   stages {
-    stage('b1') {
+    stage('Build') {
       steps {
         script {
           def ecsCluster = ${ECS_CLUSTER}-lab
