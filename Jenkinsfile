@@ -27,7 +27,7 @@ pipeline {
                 def json = new groovy.json.JsonSlurper().parseText(tdJson)
 
                 json.remove('executionRoleArn')
-                //              println groovy.json.JsonOutput.toJson(json)
+                println groovy.json.JsonOutput.toJson(json)
               }
             }
 
