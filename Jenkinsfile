@@ -12,13 +12,15 @@ pipeline {
               def tdJson = sh(returnStdout:true, script: "aws ecs describe-task-definition --task-definition ${TASK_DEF}").trim()
 
               def keys = ['family', 'taskRoleArn', 'executionRoleArn', 'networkMode', 'containerDefinitions', 'volumes', 'placementConstraints', 'requiresCompatibilities', 'cpu', 'memory', 'tags', 'pidMode', 'ipcMode', 'proxyConfiguration']
-              def json = readJSON text: tdJson, returnPojo: true
+              def json = readJSON text: tdJson
               json = json.taskDefinition
               json.containerDefinitions.each {obj ->
-              echo obj.image
+              if (obj.image ==~ /^${imgUrl}/) {
+                obj.image = imgUrl + ":" + imgVer
+              }
 
             }
-
+            echo json.containerDefinitions[0]
 
           }
         }
