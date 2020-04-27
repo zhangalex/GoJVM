@@ -1,10 +1,10 @@
 pipeline {
   agent any
   stages {
+    stage('Version') {
 when {
 buildingTag()
 }
-    stage('Version') {
       steps {
         script {
           imgVer = TAG_NAME
