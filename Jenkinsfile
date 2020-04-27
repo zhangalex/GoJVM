@@ -36,7 +36,7 @@ pipeline {
                 }
 
                 def jsonStr = groovy.json.JsonOutput.toJson(json)
-                def json2Input = text text: josnStr
+                def json2Input = text text: jsonStr
                 writeJSON file: 'output.json', json: json2Input
 
                 sh 'cat output.json'
