@@ -8,7 +8,7 @@ pipeline {
             echo 'a1'
             script {
               def jsonStr = '{"a": 1, "b": [{"c": 3, "d": 4}]}}'
-              def json = new JsonSlurper().parseText(jsonStr)
+              def json = new groovy.json.JsonSlurper().parseText(jsonStr)
               // XXX: first "de-array" `b`
               json.b = json.b.first()
               // next remove `c` from it
