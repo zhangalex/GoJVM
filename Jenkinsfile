@@ -27,7 +27,7 @@ pipeline {
               def newTdJson = readJSON text: newTdJsonStr
               def taskRevision = newTdJson.taskDefinition.revision
 
-              def svcJsonStr = sh(returnStdout:true, script: "aws ecs describe-services --cluster ${ecsCluster}--services ${ECS_SERVICE_NAME}").trim()
+              def svcJsonStr = sh(returnStdout:true, script: "aws ecs describe-services --cluster ${ecsCluster} --services ${ECS_SERVICE_NAME}").trim()
               def svcJson = readJSON text: svcJsonStr
               def desiredCount = svcJson.desiredCount
               if (desiredCount == null){
