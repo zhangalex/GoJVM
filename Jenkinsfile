@@ -28,7 +28,9 @@ pipeline {
                 def keys = ['family', 'taskRoleArn', 'executionRoleArn', 'networkMode', 'containerDefinitions', 'volumes', 'placementConstraints', 'requiresCompatibilities', 'cpu', 'memory', 'tags', 'pidMode', 'ipcMode', 'proxyConfiguration']
 
                 json.keySet().each {
-                  if (keys.indexOf(it) == -1) {
+                  def target = it
+                  def i = keys.findIndexOf { it == target }
+                  if (i == -1) {
                     json.remove(it)
                   }
                 }
