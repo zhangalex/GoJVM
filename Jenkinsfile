@@ -16,7 +16,7 @@ pipeline {
               json = json.taskDefinition
               json.containerDefinitions.each {obj ->
               if (obj.image ==~ /^${imgUrl}/) {
-                obj.image = imgUrl + ":" + imgVer
+                //obj.image = imgUrl + ":" + imgVer
               }
 
             }
