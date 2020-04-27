@@ -35,7 +35,7 @@ pipeline {
                   }
                 }
 
-                writeJSON file: 'output.json', json: json
+                writeJSON file: 'output.json', json: json.toString()
 
                 sh 'cat output.json'
 
