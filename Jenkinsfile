@@ -28,7 +28,8 @@ pipeline {
                   //def json = new groovy.json.JsonSlurper().parseText(tdJson)
                   def keys = ['family', 'taskRoleArn', 'executionRoleArn', 'networkMode', 'containerDefinitions', 'volumes', 'placementConstraints', 'requiresCompatibilities', 'cpu', 'memory', 'tags', 'pidMode', 'ipcMode', 'proxyConfiguration']
                   def json = readJSON text: tdJson
-                  json.get('taskDefinition').keySet().each {
+                  json = json.get('taskDefinition')
+                  json.keySet().each {
                     def target = it
                     def i = keys.findIndexOf { it == target }
                     if (i == -1) {
