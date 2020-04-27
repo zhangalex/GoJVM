@@ -22,12 +22,12 @@ pipeline {
         stage('b1') {
           steps {
             script {
-              configFileProvider([configFile(fileId: 'td-nparks-poi-service', variable: 'TD_FILE_PATH')]) {
-                def tdJson = readFile(TD_FILE_PATH)
+              withAWS(credentials: AWS_CREDENTIAL_ID, region: AWS_REGION) {
+                def tdJson = sh(returnStdout:true, script: "aws ecs describe-task-definition --task-definition td-nparks-poi").trim()
                 def json = new groovy.json.JsonSlurper().parseText(tdJson)
                 def keys = ['family', 'taskRoleArn', 'executionRoleArn', 'networkMode', 'containerDefinitions', 'volumes', 'placementConstraints', 'requiresCompatibilities', 'cpu', 'memory', 'tags', 'pidMode', 'ipcMode', 'proxyConfiguration']
 
-                json.keySet().each {
+                json.get('taskDefinition').keySet().each {
                   def target = it
                   def i = keys.findIndexOf { it == target }
                   if (i == -1) {
@@ -35,8 +35,8 @@ pipeline {
                   }
                 }
 
-                def jsonStr = groovy.json.JsonOutput.toJson(json)
-                def json2Input = text text: jsonStr
+                //                def jsonStr = groovy.json.JsonOutput.toJson(json)
+                def json2Input = readJSON text: json
                 writeJSON file: 'output.json', json: json2Input
 
                 sh 'cat output.json'
