@@ -12,7 +12,7 @@ pipeline {
               def tdJson = sh(returnStdout:true, script: "aws ecs describe-task-definition --task-definition ${TASK_DEF}").trim()
 
               def keys = ['family', 'taskRoleArn', 'executionRoleArn', 'networkMode', 'containerDefinitions', 'volumes', 'placementConstraints', 'requiresCompatibilities', 'cpu', 'memory', 'tags', 'pidMode', 'ipcMode', 'proxyConfiguration']
-              def json = readJSON text: tdJson
+              def json = readJSON text: tdJson, returnPojo: true
               json = json.taskDefinition
               json.containerDefinitions.each {key, value ->
               echo "Walked through key $key and value $value"
