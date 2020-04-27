@@ -26,7 +26,8 @@ pipeline {
                 def tdJson = readFile(TD_FILE_PATH)
                 def json = new groovy.json.JsonSlurper().parseText(tdJson)
 
-                json.remove('executionRoleArn')
+                json.each {echo it}
+
                 println groovy.json.JsonOutput.toJson(json)
               }
             }
