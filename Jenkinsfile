@@ -23,10 +23,10 @@ pipeline {
           steps {
             script {
               configFileProvider([configFile(fileId: 'td-nparks-poi-service', variable: 'TD_FILE_PATH')]) {
-                echo readFile(TD_FILE_PATH)
-                //def json = new groovy.json.JsonSlurper().parseText(readFile(TD_FILE_PATH))
+                def tdJson = readFile(TD_FILE_PATH)
+                def json = new groovy.json.JsonSlurper().parseText(tdJson)
 
-                //                json.remove('executionRoleArn')
+                json.remove('executionRoleArn')
                 //              println groovy.json.JsonOutput.toJson(json)
               }
             }
