@@ -24,12 +24,12 @@ pipeline {
 
               def newTdJsonStr = sh(returnStdout:true, script: "aws ecs describe-task-definition --task-definition ${TASK_DEF}").trim()
               def newTdJson = readJSON text: newTdJsonStr
-              def taskRevision = newTdJson.get('revision')
+              def taskRevision = newTdJson.taskDefinition.revision
 
               def svcJsonStr = sh(returnStdout:true, script: "aws ecs describe-services --cluster ${ECS_CLUSTER}-lab --services ${ECS_SERVICE_NAME}").trim()
               def svcJson = readJSON text: svcJsonStr
-              def desiredCount = svcJson.get('desiredCount')
-              if (desiredCount == 0){
+              def desiredCount = svcJson.desiredCount
+              if (desiredCount == null){
                 desiredCount=1
               }
 
