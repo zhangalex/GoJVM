@@ -25,9 +25,9 @@ pipeline {
               withAWS(credentials: AWS_CREDENTIAL_ID, region: AWS_REGION) {
                 docker.image("releaseworks/awscli:latest").inside("--entrypoint \"\" -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY -e AWS_DEFAULT_REGION") {
                   def tdJson = sh(returnStdout:true, script: "aws ecs describe-task-definition --task-definition td-nparks-poi").trim()
-                  def json = new groovy.json.JsonSlurper().parseText(tdJson)
+                  //def json = new groovy.json.JsonSlurper().parseText(tdJson)
                   def keys = ['family', 'taskRoleArn', 'executionRoleArn', 'networkMode', 'containerDefinitions', 'volumes', 'placementConstraints', 'requiresCompatibilities', 'cpu', 'memory', 'tags', 'pidMode', 'ipcMode', 'proxyConfiguration']
-
+                  def json = readJSON text: tdJson
                   json.get('taskDefinition').keySet().each {
                     def target = it
                     def i = keys.findIndexOf { it == target }
@@ -35,9 +35,6 @@ pipeline {
                       json.remove(it)
                     }
                   }
-
-                  //                def jsonStr = groovy.json.JsonOutput.toJson(json)
-                  //                  def json2Input = readJSON text: json
                   writeJSON file: 'output.json', json: json
 
                   sh 'cat output.json'
