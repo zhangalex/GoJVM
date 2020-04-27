@@ -4,7 +4,7 @@ pipeline {
 stage('Version') {
       when {
         expression {
-          BRANCH_NAME ==~ /release\/.+/
+          BRANCH_NAME ==~ /tags\/.+/
         }
 
       }
