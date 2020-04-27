@@ -2,15 +2,10 @@ pipeline {
   agent any
   stages {
     stage('Version') {
-      when {
-        expression {
-          echo BRANCH_NAME
-          BRANCH_NAME ==~ /tags\/.+/
-        }
-
-      }
       steps {
         script {
+          echo BRANCH_NAME
+          echo TAG_NAME
           imgVer = TAG_NAME
           echo 'version $imgVer'
         }
